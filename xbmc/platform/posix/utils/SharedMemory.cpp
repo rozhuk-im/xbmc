@@ -70,6 +70,14 @@ CFileHandle CSharedMemory::OpenMemfd()
   }
 
   return CFileHandle(fd);
+#elif defined(HAVE_SHM_OPEN) && defined(SHM_ANON)
+  int fd = shm_open(SHM_ANON, O_RDWR | O_CREAT, 0600);
+  if (fd < 0)
+  {
+    throw std::system_error(errno, std::generic_category(), "memfd_create");
+  }
+
+  return CFileHandle(fd);
 #else
   throw std::system_error(std::make_error_code(std::errc::function_not_supported), "memfd_create");
 #endif

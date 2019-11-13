@@ -88,13 +88,6 @@ check_include_files("linux/memfd.h" HAVE_LINUX_MEMFD)
 if(HAVE_LINUX_MEMFD)
   list(APPEND ARCH_DEFINES "-DHAVE_LINUX_MEMFD=1")
 endif()
-include(CheckSymbolExists)
-set(CMAKE_REQUIRED_DEFINITIONS "-D_GNU_SOURCE")
-check_symbol_exists("mkostemp" "stdlib.h" HAVE_MKOSTEMP)
-set(CMAKE_REQUIRED_DEFINITIONS "")
-if(HAVE_MKOSTEMP)
-  list(APPEND ARCH_DEFINES "-DHAVE_MKOSTEMP=1")
-endif()
 
 # Additional SYSTEM_DEFINES
 list(APPEND SYSTEM_DEFINES -DHAS_LINUX_NETWORK)
